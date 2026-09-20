@@ -1,0 +1,10 @@
+data/candidate_latest.json
+candidate_latest.json
+*_backup_*.json
+backups/
+__pycache__/
+*.pyc
+.venv/
+config.json
+*.xlsx
+*.xlsm

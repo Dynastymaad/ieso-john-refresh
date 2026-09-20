@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Ontario Forward Percentile Desk</title>
+<link rel="preconnect" href="https://api.fontshare.com" />
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&f[]=jetbrains-mono@400,500,700&display=swap" />
+<link rel="stylesheet" href="static/style.css?v=2026-09-20-two-factor" />
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <svg width="26" height="26" viewBox="0 0 28 28" aria-label="ONT desk logo">
+      <rect x="2" y="2" width="24" height="24" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+      <path d="M7 18 L11 12 L15 16 L21 8" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="square"/>
+      <circle cx="21" cy="8" r="1.6" fill="currentColor"/>
+    </svg>
+    <div>
+      <h1>Ontario Forward Desk</h1>
+      <div class="subtitle">heat-rate & spark-spread percentiles · 90-day rolling · next 18 months</div>
+    </div>
+  </div>
+
+  <div class="meta-cluster">
+    <div class="meta-card"><div class="label">As of</div><div class="value" id="meta-asof">—</div></div>
+    <div class="meta-card"><div class="label">FX (CAD/USD)</div><div class="value" id="meta-fx">—</div></div>
+    <div class="meta-card"><div class="label">Lookback</div><div class="value" id="meta-lookback">—</div></div>
+
+  </div>
+</header>
+
+<nav class="view-tabs" role="tablist">
+  <button class="view-tab active" data-view="summary"   role="tab">Summary</button>
+  <button class="view-tab"        data-view="consensus" role="tab">Consensus</button>
+  <button class="view-tab"        data-view="desk"      role="tab">Desk</button>
+</nav>
+
+<main>
+  <!-- ============ SUMMARY VIEW ============ -->
+  <section class="view view-summary active" id="view-summary">
+    <div id="summary-content"></div>
+  </section>
+
+  <!-- ============ CONSENSUS VIEW ============ -->
+  <section class="view view-consensus" id="view-consensus">
+    <div class="consensus-legend">
+      <div class="consensus-legend-title">Two-factor consensus — how each month lines up</div>
+      <div class="consensus-legend-items">
+        <span><b class="cbadge cbadge-buy">BUY</b> factor supports buying IESO</span>
+        <span><b class="cbadge cbadge-sell">SELL</b> factor supports selling IESO</span>
+        <span><b class="cbadge cbadge-neutral">NEUT</b> no directional signal</span>
+      </div>
+      <div class="consensus-legend-formula">
+        <b>Percentile</b>: HR percentile ≤ 25% → BUY, ≥ 75% → SELL &nbsp;·&nbsp;
+        <b>Flow</b>: NY-A ($7 wheel) and PJM-WH ($17 wheel) export breakevens vs Ontario. Average gap ≥ $2 → BUY, ≤ -$2 → SELL
+      </div>
+      <div class="consensus-legend-meta" id="consensus-legend-meta">—</div>
+    </div>
+    <div class="leg-toggle-row">
+      <div class="leg-toggle-label">Leg:</div>
+      <div class="leg-toggle">
+        <button class="leg-btn active" data-leg="HL">On-Peak (HL)</button>
+        <button class="leg-btn"        data-leg="LL">Off-Peak (LL)</button>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table id="consensus-table">
+        <thead id="consensus-head"></thead>
+        <tbody id="consensus-body"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============ DESK VIEW (original) ============ -->
+  <section class="view view-desk" id="view-desk">
+    <div class="desk-leg-tabs" role="tablist" aria-label="Desk leg">
+      <button class="desk-leg-tab active" data-desk-leg="HL"   role="tab">On-Peak <span class="desk-leg-badge">HL</span></button>
+      <button class="desk-leg-tab"        data-desk-leg="LL"   role="tab">Off-Peak <span class="desk-leg-badge">LL</span></button>
+      <button class="desk-leg-tab"        data-desk-leg="FLAT" role="tab">FLAT <span class="desk-leg-badge">7×24</span></button>
+      <span class="desk-leg-caption" id="desk-leg-caption">On-Peak: Mon–Fri, hours ending 8–23, less NERC holidays</span>
+    </div>
+
+    <div id="reco-banner" class="reco-banner"></div>
+
+    <div class="legend">
+      <span><span class="sw sw-gold-buy"></span> Pctl ≤ P5 — STRONG BUY</span>
+      <span><span class="sw sw-buy"></span> Pctl ≤ P10 — BUY</span>
+      <span><span class="sw sw-sell"></span> Pctl ≥ P90 — SELL</span>
+      <span><span class="sw sw-gold-sell"></span> Pctl ≥ P95 — STRONG SELL</span>
+      <span class="legend-note">Heat-rate target for spark spread: <b id="legend-target">7.0</b> MMBtu/MWh</span>
+    </div>
+
+    <div class="table-wrap">
+      <table id="desk-table">
+        <thead id="desk-head"></thead>
+        <tbody id="desk-body"></tbody>
+      </table>
+    </div>
+
+    <section class="drill-section">
+      <div class="drill-picker-row">
+        <div class="drill-picker-label">Select month for drill-down</div>
+        <div id="month-picker" class="month-picker"></div>
+      </div>
+      <div id="drilldown-charts"></div>
+    </section>
+  </section>
+</main>
+
+<footer>
+  Ontario forward percentile desk · data sourced from the warehouse SQL pipeline
+</footer>
+
+<script src="static/dashboard.js?v=2026-09-20-two-factor"></script></body>
+</html>
